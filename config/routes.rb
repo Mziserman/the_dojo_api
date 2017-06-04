@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :session, only: [:create, :destroy]
-      resources :stream, only: [:index]
+      resource :sessions, only: [:create, :destroy]
+      resources :streams, only: [:index]
     end
   end
 end
