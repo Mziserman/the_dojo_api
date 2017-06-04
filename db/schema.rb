@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170604211549) do
 
   create_table "streams", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
