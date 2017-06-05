@@ -2,12 +2,13 @@ class Api::V1::StreamsController < ApplicationController
   def index
     @streams = Stream.all
 
-    render json: @streams, status: :ok
+    render json: @streams, :except => :user_id, :include => :user, status: :ok
   end
 
   def create
     @stream = Stream.new(stream_params)
     @stream.save
+
     render json: @stream, status: :created
   end
 
