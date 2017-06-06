@@ -1,9 +1,11 @@
 {
 	"user_id": 1, 
 	"twitch_stream_id": 1,
+	"twitch_created_at": "date",
 	"stream_id": 1,
 	"viewers": 10, //from twitch
 	"name": "aa", //from twitch
+	"live": "true",
 	"category": {
 
 	},

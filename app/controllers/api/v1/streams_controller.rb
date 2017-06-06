@@ -4,8 +4,6 @@ class Api::V1::StreamsController < ApplicationController
     @streams = Stream.all
 
     render 'index.json'
-    # render json: @live_users, :include => :streams, status: :ok
-    # render json: @streams, :except => :user_id, :include => :user, status: :ok
   end
 
   def show
@@ -28,6 +26,47 @@ class Api::V1::StreamsController < ApplicationController
       head(:ok)
     else
       head(:unprocessable_entity)
+    end
+  end
+
+  def create_stream
+    response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
+      params[:channel] + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
+
+    streamer = User.where(channel: params[:channel]).first
+
+    # stream = streamer.streams.new(
+    stream = Stream.new(
+      twitch_stream_id: response["stream"]["_id"],
+      twitch_created_at: DateTime.parse(response["stream"]["created_at"]),
+      name: response["stream"]["channel"]["status"],
+      viewers: response["stream"]["viewers"],
+      max_viewers: response["stream"]["viewers"]
+    )
+
+    if stream.save
+      render json: stream, status: :created
+    else
+      render json: stream.errors.inspect, status: :error
+    end
+  end
+
+  def update_stream
+    response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
+      params[:channel] + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
+
+    stream = Stream.where(twitch_stream_id: response["stream"]["_id"]).first
+
+
+    stream.viewers = response["stream"]["viewers"]
+    if stream.max_viewers < response["stream"]["viewers"]
+      stream.max_viewers = response["stream"]["viewers"]
+    end
+
+    if stream.save
+      render json: stream, status: :ok
+    else
+      puts stream.errors.inspect
     end
   end
 

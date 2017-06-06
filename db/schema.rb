@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606094534) do
+ActiveRecord::Schema.define(version: 20170606221518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +26,13 @@ ActiveRecord::Schema.define(version: 20170606094534) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.bigint   "twitch_stream_id"
+    t.datetime "twitch_created_at"
+    t.integer  "viewers",           default: 0
+    t.boolean  "live",              default: false
+    t.integer  "max_viewers",       default: 0
   end
 
   create_table "sub_categories", force: :cascade do |t|
