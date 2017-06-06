@@ -1,3 +1,7 @@
 json.(stream,
   :id,
-  :name)
+  :name,
+  :twitch_stream_id,
+  :twitch_created_at,
+  :viewers,
+  :max_viewers)
