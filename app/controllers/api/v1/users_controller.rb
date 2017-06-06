@@ -4,7 +4,6 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created
     else
-      puts @user.errors.inspect
       head(:unauthorized)
     end
   end

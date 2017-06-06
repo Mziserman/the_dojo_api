@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+1.times do
+  u = User.create(email: "martinziserman@gmail.com", password: "aaaaaaaa",
+    password_confirmation: "aaaaaaaa")
+  u.streams.create
+  u = User.create(email: "ben@gmail.com", password: "aaaaaaaa",
+    password_confirmation: "aaaaaaaa")
+  u.streams.create
+end
