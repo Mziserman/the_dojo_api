@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606084450) do
+ActiveRecord::Schema.define(version: 20170606094534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,11 +21,25 @@ ActiveRecord::Schema.define(version: 20170606084450) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories_streams", id: false, force: :cascade do |t|
+  create_table "streams", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.string   "slug"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "tags_streams", force: :cascade do |t|
     t.integer "stream_id"
-    t.integer "category_id"
-    t.index ["category_id"], name: "index_categories_streams_on_category_id", using: :btree
-    t.index ["stream_id"], name: "index_categories_streams_on_stream_id", using: :btree
+    t.integer "sub_category_id"
+    t.index ["stream_id"], name: "index_tags_streams_on_stream_id", using: :btree
+    t.index ["sub_category_id"], name: "index_tags_streams_on_sub_category_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170606084450) do
     t.string   "pseudo"
     t.string   "avatar"
     t.boolean  "live"
+    t.string   "channel"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
