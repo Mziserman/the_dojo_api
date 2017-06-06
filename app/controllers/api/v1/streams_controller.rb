@@ -1,16 +1,17 @@
 class Api::V1::StreamsController < ApplicationController
   def index
     @live_users = User.live
-    @streams = Stream.all
+    # @streams = Stream.all
 
     render json: @live_users, :include => :streams, status: :ok
     # render json: @streams, :except => :user_id, :include => :user, status: :ok
   end
 
   def show
-    @stream = Stream.where(id: params[:id]).first
+    @streamer = User.where(channel: params[:id]).first
 
-    render json: @stream, :except => :user_id, :include => :user, status: :ok
+
+    render json: @streamer, :include => :streams, status: :ok
   end
 
   def create
