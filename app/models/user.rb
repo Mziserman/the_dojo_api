@@ -7,4 +7,12 @@ class User < ApplicationRecord
 
   has_many :streams
 
+  before_save :default_values
+
+  def default_values
+    self.live ||= false
+  end
+
+  scope :live, -> { where(live: true) }
+
 end

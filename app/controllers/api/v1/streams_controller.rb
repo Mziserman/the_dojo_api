@@ -1,8 +1,10 @@
 class Api::V1::StreamsController < ApplicationController
   def index
+    @live_users = User.live
     @streams = Stream.all
 
-    render json: @streams, :except => :user_id, :include => :user, status: :ok
+    render json: @live_users, :include => :streams, status: :ok
+    # render json: @streams, :except => :user_id, :include => :user, status: :ok
   end
 
   def show
