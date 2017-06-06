@@ -1,0 +1,20 @@
+{
+	"data": {
+		"twitch_stream_id": 1,
+		"stream_id": 1,
+		"viewers": 10, //from twitch
+		"name": "aa", //from twitch
+		"category": {
+
+		},
+		"sub_categories": [
+			{
+
+			}
+		],
+		"file": {
+			"file_id": 1,
+			"saved_files": []
+		}
+	}
+}
