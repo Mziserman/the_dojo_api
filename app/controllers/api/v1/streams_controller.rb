@@ -5,6 +5,12 @@ class Api::V1::StreamsController < ApplicationController
     render json: @streams, :except => :user_id, :include => :user, status: :ok
   end
 
+  def show
+    @stream = Stream.where(id: params[:id]).first
+
+    render json: @stream, :except => :user_id, :include => :user, status: :ok
+  end
+
   def create
     @stream = Stream.new(stream_params)
     @stream.save
