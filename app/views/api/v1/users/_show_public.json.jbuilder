@@ -4,4 +4,5 @@ json.(user,
   :last_name,
   :pseudo,
   :avatar,
-  :live)
+  :live,
+  :channel)

@@ -6,5 +6,6 @@ json.(user,
   :pseudo,
   :avatar,
   :live,
-  :authentication_token)
+  :authentication_token,
+  :channel)
 
