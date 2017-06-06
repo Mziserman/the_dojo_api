@@ -13,5 +13,5 @@
   u.streams.create
   u = User.create(email: "ben@gmail.com", password: "aaaaaaaa",
     password_confirmation: "aaaaaaaa")
-  u.streams.create
+  u.streams.create(channel: "channel name")
 end
