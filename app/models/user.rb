@@ -6,4 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :streams
+  before_save :default_values
+  def default_values
+    self.live ||= false
+  end
+
 end
