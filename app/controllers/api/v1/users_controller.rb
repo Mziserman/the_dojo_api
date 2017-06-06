@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render :index, status: :created
+      render 'show.json', status: :created
     else
       head(:unauthorized)
     end

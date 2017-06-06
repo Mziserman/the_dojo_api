@@ -4,10 +4,10 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def create
-    user = User.where(email: params[:email]).first
+    @user = User.where(email: params[:email]).first
 
-    if user&.valid_password?(params[:password])
-      render json: user, status: :created
+    if @user&.valid_password?(params[:password])
+      render 'api/v1/users/show.json', status: :created
     else
       head(:unauthorized)
     end

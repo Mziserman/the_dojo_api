@@ -1,6 +1,3 @@
-json.call(
-  stream,
+json.(stream,
   :id,
-  :name,
-  :user_id
-)
+  :name)

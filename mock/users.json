@@ -1,14 +1,12 @@
 {
-	"data": {
-		"user_id": 1,
-		"first_name": "a",
-		"last_name": "a",
-		"email": "a@a.a",
-		"pseudo": "aa",
-		"channel": "aa",
-		"live": false,
-		"stream": {
-			
-		}
-	}
+	"user_id": 1,
+	"first_name": "a",
+	"last_name": "a",
+	"email": "a@a.a",
+	"pseudo": "aa",
+	"channel": "aa",
+	"live": false,
+	"streams": [
+		{}
+	]
 }

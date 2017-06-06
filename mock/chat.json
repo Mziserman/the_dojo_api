@@ -1,10 +1,8 @@
 {
-	"data": {
-		"chat_id": 1,
-		"message": "aa",
-		"user": {
+	"chat_id": 1,
+	"message": "aa",
+	"user": {
 
-		},
-		"stream_id": 1
-	}
+	},
+	"stream_id": 1
 }
