@@ -10,5 +10,4 @@ class Stream < ApplicationRecord
   end
 
   scope :live, -> { where(live: true) }
-
 end
