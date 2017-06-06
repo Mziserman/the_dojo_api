@@ -9,9 +9,10 @@
 
 1.times do
   u = User.create(email: "martinziserman@gmail.com", password: "aaaaaaaa",
-    password_confirmation: "aaaaaaaa")
+    password_confirmation: "aaaaaaaa", first_name: "martin", last_name: "ziserman",
+    avatar: "www.google.com", pseudo: "zarmilf", channel: "zarmilf_is_live")
   u.streams.create
   u = User.create(email: "ben@gmail.com", password: "aaaaaaaa",
     password_confirmation: "aaaaaaaa")
-  u.streams.create(channel: "channel name")
+  u.streams.create
 end
