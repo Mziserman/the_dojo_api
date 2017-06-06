@@ -4,7 +4,7 @@
 HOME
 
 Get all category
-Get all category with a leat one live
+Get all category with a least one live
 Get the best stream ( most viewer ) LIMIT 1
 
 ------------------------

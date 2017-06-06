@@ -7,54 +7,39 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-1.times do
+categories = ["Design", "Motion", "Photographie"]
+
+categories.each do |category|
+  cat = Category.create(name: category)
+
+  5.times do
+    u = User.create(
+      email: Faker::Internet.email,
+      password: "password",
+      password_confirmation: "password",
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
+      pseudo: Faker::Name.first_name,
+      channel: "ogaminglol",
+      live: true
+    )
+    cat.streams.create(
+      name: Faker::Name.name,
+      user: u
+    )
+  end
+end
+
+10.times do
   u = User.create(
-    email: "martinziserman@gmail.com",
+    email: Faker::Internet.email,
     password: "password",
     password_confirmation: "password",
-    first_name: "martin",
-    last_name: "ziserman",
-    avatar: "www.google.com",
-    pseudo: "zarmilf",
-    channel: "ogaminglol"
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
+    pseudo: Faker::Name.first_name,
+    live: false
   )
-  u.streams.create
-
-
-  u = User.create(
-    email: "ben@gmail.com",
-    password: "password",
-    password_confirmation: "password",
-    first_name: "martin",
-    last_name: "ziserman",
-    avatar: "www.google.com",
-    pseudo: "zarmilf",
-    channel: "ogaminglol",
-    live: true
-  )
-
-  u = User.create(
-    email: "pauline@gmail.com",
-    password: "password",
-    password_confirmation: "password",
-    first_name: "Pauline",
-    last_name: "ziserman",
-    avatar: "www.google.com",
-    pseudo: "zarmilf",
-    channel: "ogaminglol",
-    live: true
-  )
-
-  u = User.create(
-    email: "matthieu@gmail.com",
-    password: "password",
-    password_confirmation: "password",
-    first_name: "Matthieu",
-    last_name: "Taveneau",
-    avatar: "www.google.com",
-    pseudo: "zarmilf",
-    channel: "ogaminglol",
-    live: true
-  )
-  u.streams.create()
 end
