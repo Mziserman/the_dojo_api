@@ -36,7 +36,7 @@ class Api::V1::StreamsController < ApplicationController
     streamer = User.where(channel: params[:channel]).first
 
     # stream = streamer.streams.new(
-    stream = Stream.new(
+    @stream = Stream.new(
       twitch_stream_id: response["stream"]["_id"],
       twitch_created_at: DateTime.parse(response["stream"]["created_at"]),
       name: response["stream"]["channel"]["status"],
@@ -44,10 +44,10 @@ class Api::V1::StreamsController < ApplicationController
       max_viewers: response["stream"]["viewers"]
     )
 
-    if stream.save
-      render json: stream, status: :created
+    if @stream.save
+      render 'show.json', status: :created
     else
-      render json: stream.errors.inspect, status: :error
+      render json: @stream.errors.inspect, status: :error
     end
   end
 
@@ -55,18 +55,18 @@ class Api::V1::StreamsController < ApplicationController
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       params[:channel] + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
 
-    stream = Stream.where(twitch_stream_id: response["stream"]["_id"]).first
+    @stream = Stream.where(twitch_stream_id: response["stream"]["_id"]).first
 
 
-    stream.viewers = response["stream"]["viewers"]
-    if stream.max_viewers < response["stream"]["viewers"]
-      stream.max_viewers = response["stream"]["viewers"]
+    @stream.viewers = response["stream"]["viewers"]
+    if @stream.max_viewers < response["stream"]["viewers"]
+      @stream.max_viewers = response["stream"]["viewers"]
     end
 
-    if stream.save
-      render json: stream, status: :ok
+    if @stream.save
+      render 'show.json', status: :ok
     else
-      puts stream.errors.inspect
+      puts @stream.errors.inspect
     end
   end
 
