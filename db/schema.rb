@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606094534) do
+ActiveRecord::Schema.define(version: 20170606221518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 20170606094534) do
     t.integer  "viewers",           default: 0
     t.boolean  "live",              default: false
     t.integer  "max_viewers",       default: 0
+  end
+
+  create_table "streams_sub_categories", id: false, force: :cascade do |t|
+    t.integer "sub_category_id"
+    t.integer "stream_id"
+    t.index ["stream_id"], name: "index_streams_sub_categories_on_stream_id", using: :btree
+    t.index ["sub_category_id"], name: "index_streams_sub_categories_on_sub_category_id", using: :btree
   end
 
   create_table "sub_categories", force: :cascade do |t|
