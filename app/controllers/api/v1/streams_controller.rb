@@ -31,7 +31,7 @@ class Api::V1::StreamsController < ApplicationController
 
   def create_stream
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
-      params[:channel] + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
+      params[:channel] + '?client_id=' + Settings.twitch.client_id)
 
     streamer = User.where(channel: params[:channel]).first
 
@@ -53,7 +53,7 @@ class Api::V1::StreamsController < ApplicationController
 
   def update_stream
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
-      params[:channel] + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
+      params[:channel] + '?client_id=' + Settings.twitch.client_id)
 
     @stream = Stream.where(twitch_stream_id: response["stream"]["_id"]).first
 

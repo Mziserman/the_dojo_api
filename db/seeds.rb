@@ -24,9 +24,9 @@ categories.each do |category|
       channel: "ogaminglol",
       live: true
     )
-    cat.streams.create(
+    u.streams.create(
       name: Faker::Name.name,
-      user: u
+      category: cat
     )
   end
 end

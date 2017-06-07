@@ -43,6 +43,10 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     concurrent-ruby (1.0.5)
+    config (1.4.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.1.1)
+    deep_merge (1.1.1)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -147,6 +151,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  config
   devise
   faker
   httparty

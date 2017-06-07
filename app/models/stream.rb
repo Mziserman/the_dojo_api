@@ -6,13 +6,16 @@ class Stream < ApplicationRecord
 
   def bind_twitch
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
-      self.user.channel + '?client_id=t0wqumd7sh0dbsyxt2mli4r93jsxhn')
+      self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
     self.twitch_stream_id = response["stream"]["_id"]
-    self.twitch_created_at = DateTime.parse(response["stream"]["created_at"]),
-    self.name = response["stream"]["channel"]["status"],
-    self.viewers = response["stream"]["viewers"],
+    # byebug
+    self.twitch_created_at = DateTime.parse(response["stream"]["created_at"])
+    self.name = response["stream"]["channel"]["status"]
+    self.viewers = response["stream"]["viewers"]
     self.max_viewers = response["stream"]["viewers"]
+
+
   end
 
 
