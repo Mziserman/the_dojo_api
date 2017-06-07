@@ -3,6 +3,7 @@ class Api::V1::FilesController < ApplicationController
   # POST filename, stream_id
   # crée file avec stream_id/filename
   # crée v0, origin timestamp
+  # Request format {file: {name: "", stream_id: "", format: ""}}
   def create
     if current_user
       stream_id = params.require(:file).permit(:name, :stream_id, :format)[:stream_id]
@@ -22,6 +23,7 @@ class Api::V1::FilesController < ApplicationController
 
   # POST stream_id, commit_message
   # crée nouvelle version du fichier, en sauvegardant l'uptime
+  # Request format {file: {stream_id_file: "", commit_message: ""}}
   def commit
     if current_user
       stream_id = params.require(:file).permit(:commit_message, :stream_id)[:stream_id]
