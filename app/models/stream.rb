@@ -1,7 +1,9 @@
 class Stream < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :sub_categories
   belongs_to :category
+  has_one :stream_file
+  has_and_belongs_to_many :sub_categories
+  
   before_save :bind_twitch
 
   def bind_twitch
