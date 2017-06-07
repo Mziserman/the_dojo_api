@@ -1,4 +1,13 @@
 class Api::V1::UsersController < ApplicationController
+  def show
+    unless current_user.nil?
+      @user = current_user
+      render 'show.json', status: :ok
+    else
+      head(:unauthorized)
+    end
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
