@@ -7,8 +7,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def show
-    params[:id][0] = params[:id][0].capitalize
-    @category = Category.where(name: params[:id]).last
+    @category = Category.where(slug: params[:id]).last
 
     render 'show.json'
   end
