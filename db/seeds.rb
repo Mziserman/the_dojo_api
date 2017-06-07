@@ -14,8 +14,16 @@ Stream.delete_all
 
 categories = ["Design", "Motion", "Photographie"]
 
+Design = ["Photoshop", "Illustrator"]
+Motion = ["After Effect", "Widows Movie Maker"]
+Photographie  = ["Instagram", "Olol jsp"]
+
 categories.each do |category|
   cat = Category.create(name: category)
+
+  eval(category).each do |soft|
+    SubCategory.create(name: soft, category_id: cat.id)
+  end
 
   5.times do
     u = User.create(
