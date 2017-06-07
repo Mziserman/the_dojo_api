@@ -9,13 +9,10 @@ class Stream < ApplicationRecord
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
     self.twitch_stream_id = response["stream"]["_id"]
-    # byebug
     self.twitch_created_at = DateTime.parse(response["stream"]["created_at"])
-    self.name = response["stream"]["channel"]["status"]
+    self.twitch_name = response["stream"]["channel"]["status"]
     self.viewers = response["stream"]["viewers"]
     self.max_viewers = response["stream"]["viewers"]
-
-
   end
 
 
