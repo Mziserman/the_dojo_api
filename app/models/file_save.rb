@@ -1,0 +1,2 @@
+class FileSave < ApplicationRecord
+end

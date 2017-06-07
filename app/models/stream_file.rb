@@ -1,0 +1,2 @@
+class StreamFile < ApplicationRecord
+end
