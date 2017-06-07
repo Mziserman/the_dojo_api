@@ -7,9 +7,19 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def show
-    @stream = User.where(channel: params[:id]).first.streams.last
+    streamer = User.where(channel: params[:id]).first
+    unless streamer.nil?
+      unless streamer.streams&.empty?
+        @stream = streamer.streams.last
+        render 'show.json', status: :ok
+      else
+        head(:unauthorized)
+      end
+    else
+      head(:unauthorized)
+    end
 
-    render 'show.json', status: :ok
+
   end
 
   def create
@@ -26,28 +36,6 @@ class Api::V1::StreamsController < ApplicationController
       head(:ok)
     else
       head(:unprocessable_entity)
-    end
-  end
-
-  def create_stream
-    response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
-      params[:channel] + '?client_id=' + Settings.twitch.client_id)
-
-    streamer = User.where(channel: params[:channel]).first
-
-    # stream = streamer.streams.new(
-    @stream = Stream.new(
-      twitch_stream_id: response["stream"]["_id"],
-      twitch_created_at: DateTime.parse(response["stream"]["created_at"]),
-      twitch_name: response["stream"]["channel"]["status"],
-      viewers: response["stream"]["viewers"],
-      max_viewers: response["stream"]["viewers"]
-    )
-
-    if @stream.save
-      render 'show.json', status: :created
-    else
-      render json: @stream.errors.inspect, status: :error
     end
   end
 
@@ -72,6 +60,6 @@ class Api::V1::StreamsController < ApplicationController
 
   private
   def stream_params
-    params.require(:stream).permit(:user_id, :name)
+    params.require(:stream).permit(:user_id, :name, :description)
   end
 end

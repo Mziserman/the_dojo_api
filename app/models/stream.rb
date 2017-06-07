@@ -25,7 +25,6 @@ class Stream < ApplicationRecord
     self.twitch_created_at = DateTime.parse(response["stream"]["created_at"])
     self.twitch_name = response["stream"]["channel"]["status"]
     self.viewers = response["stream"]["viewers"]
-
     self.max_viewers = response["stream"]["viewers"]
   end
 

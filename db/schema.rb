@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170607122432) do
     t.integer  "viewers",           default: 0
     t.boolean  "live",              default: false
     t.integer  "max_viewers",       default: 0
+    t.string   "description"
   end
 
   create_table "streams_sub_categories", id: false, force: :cascade do |t|

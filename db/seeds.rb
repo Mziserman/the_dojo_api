@@ -13,6 +13,7 @@ Stream.delete_all
 
 
 categories = ["Design", "Motion", "Photographie"]
+channel = ["a_seagull", "Alderiate", "ogaminglol", "learnsquare"]
 
 Design = ["Photoshop", "Illustrator"]
 Motion = ["After Effect", "Widows Movie Maker"]
@@ -34,7 +35,7 @@ categories.each do |category|
       last_name: Faker::Name.last_name,
       avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
       pseudo: Faker::Name.first_name,
-      channel: "ogaminglol",
+      channel: channel.sample,
       live: true
     )
     u.streams.create(
