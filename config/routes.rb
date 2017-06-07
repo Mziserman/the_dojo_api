@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :sub_categories, only: [:index, :show]
       get '/streams/create_stream/:channel', to: 'streams#create_stream'
       get '/streams/update_stream/:channel', to: 'streams#update_stream'
+      get '/home', to: 'home#index'
     end
   end
 end

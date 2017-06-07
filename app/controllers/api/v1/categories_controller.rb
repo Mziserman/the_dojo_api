@@ -6,10 +6,4 @@ class Api::V1::CategoriesController < ApplicationController
     render 'index.json'
   end
 
-  def show
-    @category = Category.where(slug: params[:id]).last
-
-    render 'show.json'
-  end
-
 end
