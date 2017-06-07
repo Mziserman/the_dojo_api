@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Category.delete_all
+SubCategory.delete_all
+User.delete_all
+Stream.delete_all
+
 
 categories = ["Design", "Motion", "Photographie"]
 
