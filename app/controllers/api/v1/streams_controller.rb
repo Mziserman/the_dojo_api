@@ -39,7 +39,7 @@ class Api::V1::StreamsController < ApplicationController
     @stream = Stream.new(
       twitch_stream_id: response["stream"]["_id"],
       twitch_created_at: DateTime.parse(response["stream"]["created_at"]),
-      name: response["stream"]["channel"]["status"],
+      twitch_name: response["stream"]["channel"]["status"],
       viewers: response["stream"]["viewers"],
       max_viewers: response["stream"]["viewers"]
     )
