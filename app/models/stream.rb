@@ -17,6 +17,9 @@ class Stream < ApplicationRecord
     self.max_viewers = response["stream"]["viewers"]
   end
 
+  def is_saved?
+    !self.stream_file.nil?
+  end
 
   def uptime
     Time.now - self.twitch_created_at

@@ -31,10 +31,10 @@ ActiveRecord::Schema.define(version: 20170607122432) do
   end
 
   create_table "stream_files", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "file_name"
-    t.string   "file_format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "format"
     t.integer  "stream_id"
   end
 
