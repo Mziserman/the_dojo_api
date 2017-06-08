@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :files, only: [:create]
-      resource :users, only: [:show, :create, :destroy]
+      resource :users, only: [:show, :create, :destroy, :update]
       resource :sessions, only: [:show, :create, :destroy]
       resources :streams, only: [:index, :create, :destroy, :show]
       resources :categories, only: [:index, :show]
