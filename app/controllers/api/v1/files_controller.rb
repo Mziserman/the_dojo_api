@@ -1,5 +1,5 @@
 class Api::V1::FilesController < ApplicationController
-  
+
   # POST filename, stream_id
   # crée file avec stream_id/filename
   # crée v0, origin timestamp
@@ -8,7 +8,7 @@ class Api::V1::FilesController < ApplicationController
     if current_user
       stream_id = params.require(:file).permit(:stream_id)[:stream_id]
 
-      if Stream.find(stream_id).live == true && Stream.find(stream_id).is_saved? != true
+      if Stream.find(stream_id).live == true
         @file = StreamFile.create(params.require(:file).permit(:name, :stream_id, :format))
         @version = FileCommit.create(version: 0, stream_file_id: @file.id, commit_message: "Debut du trackage")
         render 'create.json', status: :ok
@@ -43,7 +43,7 @@ class Api::V1::FilesController < ApplicationController
       render json: 'error', status: :error
     end
   end
-  
+
   #GET all version for a stream
   # Argument stream_id
   def index
