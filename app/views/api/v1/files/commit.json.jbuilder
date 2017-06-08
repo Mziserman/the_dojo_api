@@ -1,0 +1,1 @@
+json.partial! 'show_version.json', version: @version
