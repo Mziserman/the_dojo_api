@@ -4,7 +4,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     @category = SubCategory.where(slug: params[:sub_category]).last
     @stream = @category.streams
 
-    render 'api/v1/categories/show.json'
+    render 'show.json'
   end
 
 end
