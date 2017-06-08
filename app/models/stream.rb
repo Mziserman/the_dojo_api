@@ -27,6 +27,8 @@ class Stream < ApplicationRecord
     self.viewers = response["stream"]["viewers"]
     self.max_viewers = response["stream"]["viewers"]
     self.thumbnail = response["stream"]["preview"]["large"]
+
+    self
   end
 
   def is_saved?

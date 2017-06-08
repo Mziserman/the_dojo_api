@@ -40,7 +40,8 @@ categories.each do |category|
     )
     u.streams.create(
       name: Faker::Name.name,
-      category: cat
+      category: cat,
+      description: Faker::Lorem.paragraph
     )
   end
 end
