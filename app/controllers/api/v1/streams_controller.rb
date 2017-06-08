@@ -1,6 +1,5 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-    # @live_streamers = User.live.streams
     @streams = Stream.all
 
     render 'index.json'
@@ -25,7 +24,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def create
-    @stream = Stream.new(stream_params)
+    @stream = current_user.streams.new(stream_params)
     @stream.save
 
     render json: @stream, status: :created
