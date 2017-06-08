@@ -8,6 +8,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def show
     @category = Category.where(slug: params[:id]).last
+    @stream = @category.streams
 
     render 'show.json'
   end

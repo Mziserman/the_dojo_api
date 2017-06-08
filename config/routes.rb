@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resource :sessions, only: [:show, :create, :destroy]
       resources :streams, only: [:index, :create, :destroy, :show]
       resources :categories, only: [:index, :show]
-      resources :sub_categories, only: [:index, :show]
+      get '/categories/:category/:sub_category', to: 'sub_categories#show'
       get '/streams/create_stream/:channel', to: 'streams#create_stream'
       get '/streams/update_stream/:channel', to: 'streams#update_stream'
       get '/home', to: 'home#index'
