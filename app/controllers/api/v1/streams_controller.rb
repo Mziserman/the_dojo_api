@@ -47,6 +47,7 @@ class Api::V1::StreamsController < ApplicationController
 
 
     @stream.viewers = response["stream"]["viewers"]
+    @stream.thumbnail = response["stream"]["preview"]["large"]
     if @stream.max_viewers < response["stream"]["viewers"]
       @stream.max_viewers = response["stream"]["viewers"]
     end
