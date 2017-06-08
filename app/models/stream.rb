@@ -26,6 +26,7 @@ class Stream < ApplicationRecord
     self.twitch_name = response["stream"]["channel"]["status"]
     self.viewers = response["stream"]["viewers"]
     self.max_viewers = response["stream"]["viewers"]
+    self.thumbnail = response["stream"]["preview"]["large"]
   end
 
   def is_saved?
