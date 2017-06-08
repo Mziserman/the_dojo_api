@@ -21,6 +21,7 @@ class Stream < ApplicationRecord
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
+    self.live = true
     self.twitch_stream_id = response["stream"]["_id"]
     self.twitch_created_at = DateTime.parse(response["stream"]["created_at"])
     self.twitch_name = response["stream"]["channel"]["status"]
@@ -35,10 +36,15 @@ class Stream < ApplicationRecord
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
-    self.viewers = response["stream"]["viewers"]
-    self.thumbnail = response["stream"]["preview"]["large"]
-    if self.max_viewers < response["stream"]["viewers"]
-      self.max_viewers = response["stream"]["viewers"]
+    if response["stream"].nil?
+      self.live = false
+    else
+      self.live = true
+      self.viewers = response["stream"]["viewers"]
+      self.thumbnail = response["stream"]["preview"]["large"]
+      if self.max_viewers < response["stream"]["viewers"]
+        self.max_viewers = response["stream"]["viewers"]
+      end
     end
 
     self.save
