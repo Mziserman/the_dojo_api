@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607122432) do
+ActiveRecord::Schema.define(version: 20170608153609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,19 +22,20 @@ ActiveRecord::Schema.define(version: 20170607122432) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "file_saves", force: :cascade do |t|
+  create_table "file_commits", force: :cascade do |t|
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "commit_message"
+    t.string   "path"
     t.integer  "version"
     t.integer  "stream_file_id"
   end
 
   create_table "stream_files", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "file_name"
-    t.string   "file_format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "format"
     t.integer  "stream_id"
   end
 
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170607122432) do
     t.boolean  "live",              default: true
     t.integer  "max_viewers",       default: 0
     t.string   "description"
+    t.string   "thumbnail"
   end
 
   create_table "streams_sub_categories", id: false, force: :cascade do |t|
