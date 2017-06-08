@@ -31,6 +31,19 @@ class Stream < ApplicationRecord
     self
   end
 
+  def update_twitch_data
+    response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
+      self.user.channel + '?client_id=' + Settings.twitch.client_id)
+
+    self.viewers = response["stream"]["viewers"]
+    self.thumbnail = response["stream"]["preview"]["large"]
+    if self.max_viewers < response["stream"]["viewers"]
+      self.max_viewers = response["stream"]["viewers"]
+    end
+
+    self.save
+  end
+
   def is_saved?
     !self.stream_file.nil?
   end
