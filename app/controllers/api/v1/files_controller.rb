@@ -6,11 +6,11 @@ class Api::V1::FilesController < ApplicationController
   # Request format {file: {name: "", stream_id: "", format: ""}}
   def create
     if current_user
-      stream_id = params.require(:file).permit(:name, :stream_id, :format)[:stream_id]
+      stream_id = params.require(:file).permit(:stream_id)[:stream_id]
 
       if Stream.find(stream_id).live == true && Stream.find(stream_id).is_saved? != true
         @file = StreamFile.create(params.require(:file).permit(:name, :stream_id, :format))
-        @version = FileSave.create(version: 0, stream_file_id: @file.id, commit_message: "Debut du trackage")
+        @version = FileCommit.create(version: 0, stream_file_id: @file.id, commit_message: "Debut du trackage")
         render 'create.json', status: :ok
       else
         render json: 'error', status: :error
@@ -26,11 +26,12 @@ class Api::V1::FilesController < ApplicationController
   # Request format {file: {stream_id_file: "", commit_message: ""}}
   def commit
     if current_user
-      stream_id = params.require(:file).permit(:commit_message, :stream_id)[:stream_id]
+      stream_file_id = params.require(:file).permit(:stream_file_id)[:stream_file_id]
 
       if Stream.find(stream_id).live == true
-        @version = FileSave.create(params.require(:file).permit(:commit_message, :stream_file_id))
-        @version.version = FileSave.where(stream_file_id: stream_id).last.id
+        version_last = FileCommit.where(stream_file_id: stream_file_id).last.version
+        @version = FileCommit.create(params.require(:file).permit(:commit_message, :stream_file_id))
+        @version.version = version_last + 1
         if @version.save
           render 'commit.json', status: :ok
         end
@@ -43,9 +44,27 @@ class Api::V1::FilesController < ApplicationController
     end
   end
   
-  # GET stream_id
-  # last saved file
-  #
+  #GET all version for a stream
+  def index
+  end
+
+  # POST stream_id
+  # download file version
+  # Request format {file: {file_id: , version: }}
+  def show_commit
+    if current_user
+      file_id = params.require(:file).permit(:file_id)[:file_id]
+      version = params.require(:file).permit(:version)[:version]
+
+      @file = StreamFile.find(file_id)
+      @commit = @file.file_commits.where(version: version).last
+
+      render 'download.json'
+    else
+      render json: 'error', status: :error
+    end
+  end
+  
   # V2: GET stream_id, uptime
   # previous saved file
 end

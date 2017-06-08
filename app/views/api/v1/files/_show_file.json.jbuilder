@@ -1,1 +1,1 @@
-json.(file, :name, :stream_id)
+json.(file, :id, :name, :stream_id, :format)

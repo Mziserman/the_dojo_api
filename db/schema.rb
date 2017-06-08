@@ -22,10 +22,11 @@ ActiveRecord::Schema.define(version: 20170607122432) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "file_saves", force: :cascade do |t|
+  create_table "file_commits", force: :cascade do |t|
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "commit_message"
+    t.string   "path"
     t.integer  "version"
     t.integer  "stream_file_id"
   end
