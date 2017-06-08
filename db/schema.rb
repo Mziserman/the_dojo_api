@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(version: 20170607122432) do
     t.integer  "viewers",           default: 0
     t.boolean  "live",              default: false
     t.integer  "max_viewers",       default: 0
+    t.string   "description"
+  end
+
+  create_table "streams_sub_categories", id: false, force: :cascade do |t|
+    t.integer "sub_category_id"
+    t.integer "stream_id"
+    t.index ["stream_id"], name: "index_streams_sub_categories_on_stream_id", using: :btree
+    t.index ["sub_category_id"], name: "index_streams_sub_categories_on_sub_category_id", using: :btree
   end
 
   create_table "sub_categories", force: :cascade do |t|

@@ -3,8 +3,19 @@ class Stream < ApplicationRecord
   belongs_to :category
   has_one :stream_file
   has_and_belongs_to_many :sub_categories
-  
-  before_save :bind_twitch
+
+  before_create :bind_twitch
+  before_validation :is_live?
+
+  def is_live?
+    response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
+      self.user.channel + '?client_id=' + Settings.twitch.client_id)
+
+    if response["stream"].nil?
+      throw :abort
+    end
+  end
+
 
   def bind_twitch
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
