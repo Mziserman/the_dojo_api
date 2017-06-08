@@ -12,7 +12,8 @@ Rails.application.routes.draw do
       get '/streams/update_stream/:channel', to: 'streams#update_stream'
       post '/files/create', to: 'files#create'
       post '/files/commit', to: 'files#commit'
-      post '/files/show/commit', to: 'files#show_commit'
+      post '/files/commit/show', to: 'files#show_commit'
+      get '/files//commit/index', to: 'files#index'
     end
   end
 end

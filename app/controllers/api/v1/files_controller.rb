@@ -45,7 +45,13 @@ class Api::V1::FilesController < ApplicationController
   end
   
   #GET all version for a stream
+  # Argument stream_id
   def index
+    stream_id = params[:stream_id]
+
+    @commits = Stream.find(stream_id).stream_file.file_commits
+
+    render 'index.json'
   end
 
   # POST stream_id
@@ -64,7 +70,7 @@ class Api::V1::FilesController < ApplicationController
       render json: 'error', status: :error
     end
   end
-  
+
   # V2: GET stream_id, uptime
   # previous saved file
 end
