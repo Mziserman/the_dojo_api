@@ -7,13 +7,19 @@ class Stream < ApplicationRecord
   before_create :bind_twitch
   before_validation :is_live?
 
+  scope :live, -> { where(live: true) }
+
+  def check_if_live
+    unless self.is_live?
+      throw :abort
+    end
+  end
+
   def is_live?
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
-    if response["stream"].nil?
-      throw :abort
-    end
+    !response["stream"].nil?
   end
 
 
@@ -26,6 +32,8 @@ class Stream < ApplicationRecord
     self.twitch_name = response["stream"]["channel"]["status"]
     self.viewers = response["stream"]["viewers"]
     self.max_viewers = response["stream"]["viewers"]
+
+    self
   end
 
 
