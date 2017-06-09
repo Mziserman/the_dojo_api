@@ -1,5 +1,5 @@
 class Api::V1::FilesController < ApplicationController
-  
+
   # POST filename, stream_id
   # crée file avec stream_id/filename
   # crée v0, origin timestamp
@@ -8,16 +8,16 @@ class Api::V1::FilesController < ApplicationController
     if current_user
       stream_id = params.require(:file).permit(:stream_id)[:stream_id]
 
-      if Stream.find(stream_id).live == true && Stream.find(stream_id).is_saved? != true
+      if Stream.find(stream_id).live && !Stream.find(stream_id).has_file?
         @file = StreamFile.create(params.require(:file).permit(:name, :stream_id, :format))
         @version = FileCommit.create(version: 0, stream_file_id: @file.id, commit_message: "Debut du trackage")
         render 'create.json', status: :ok
       else
-        render json: 'error', status: :error
+        head(:unprocessable_entity)
       end
 
     else
-      render json: 'error', status: :error
+      head(:unauthorized)
     end
   end
 
@@ -27,8 +27,9 @@ class Api::V1::FilesController < ApplicationController
   def commit
     if current_user
       stream_file_id = params.require(:file).permit(:stream_file_id)[:stream_file_id]
+      stream = StreamFile.find(stream_file_id).stream
 
-      if Stream.find(stream_id).live == true
+      if stream.live == true
         version_last = FileCommit.where(stream_file_id: stream_file_id).last.version
         @version = FileCommit.create(params.require(:file).permit(:commit_message, :stream_file_id))
         @version.version = version_last + 1
@@ -36,19 +37,18 @@ class Api::V1::FilesController < ApplicationController
           render 'commit.json', status: :ok
         end
       else
-        render json: 'error', status: :error
+        head(:unprocessable_entity)
       end
 
     else
-      render json: 'error', status: :error
+      head(:unauthorized)
     end
   end
-  
+
   #GET all version for a stream
   # Argument stream_id
   def index
     stream_id = params[:stream_id]
-
     @commits = Stream.find(stream_id).stream_file.file_commits
 
     render 'index.json'
@@ -65,9 +65,9 @@ class Api::V1::FilesController < ApplicationController
       @file = StreamFile.find(file_id)
       @commit = @file.file_commits.where(version: version).last
 
-      render 'download.json'
+      render 'download.json', status: :ok
     else
-      render json: 'error', status: :error
+      head(:unprocessable_entity)
     end
   end
 

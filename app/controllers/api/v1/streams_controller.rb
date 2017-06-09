@@ -1,6 +1,6 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-    @streams = Stream.all
+    @streams = Stream.live
 
     render 'index.json'
   end
@@ -14,29 +14,32 @@ class Api::V1::StreamsController < ApplicationController
 
         render 'show.json', status: :ok
       else
-        head(:unauthorized)
+        render json: { errors: ["No online stream for this channel"] }, status: :unauthorized
       end
     else
-      head(:unauthorized)
+      render json: { errors: ["No user has this channel"] }, status: :unauthorized
     end
-
-
   end
 
   def create
     @stream = current_user.streams.new(stream_params)
-    @stream.save
 
-    render json: @stream, status: :created
+    if @stream.is_live?
+      @stream.save
+      render 'show.json', status: :created
+    else
+      render json: { errors: ["stream is offline"] }, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @stream = current_user.streams.where(id: params[:id]).first
-
-    if @stream.destroy
-      head(:ok)
+    if !@stream&.live
+      render 'show.json', status: :ok
+    elsif @stream&.update(live: false)
+      render 'show.json', status: :ok
     else
-      head(:unprocessable_entity)
+      head(:unauthorized)
     end
   end
 
@@ -46,22 +49,26 @@ class Api::V1::StreamsController < ApplicationController
 
     @stream = Stream.where(twitch_stream_id: response["stream"]["_id"]).first
 
+    if response["stream"].nil?
+      @stream.live = false
+    else
+      @stream.viewers = response["stream"]["viewers"]
+      @stream.thumbnail = response["stream"]["preview"]["large"]
 
-    @stream.viewers = response["stream"]["viewers"]
-    @stream.thumbnail = response["stream"]["preview"]["large"]
-    if @stream.max_viewers < response["stream"]["viewers"]
-      @stream.max_viewers = response["stream"]["viewers"]
+      if @stream.max_viewers < response["stream"]["viewers"]
+        @stream.max_viewers = response["stream"]["viewers"]
+      end
     end
 
     if @stream.save
       render 'show.json', status: :ok
     else
-      puts @stream.errors.inspect
+      render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
   def stream_params
-    params.require(:stream).permit(:user_id, :name, :description)
+    params[:stream].to_hash
   end
 end

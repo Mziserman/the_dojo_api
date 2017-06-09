@@ -5,19 +5,30 @@ class Stream < ApplicationRecord
   has_and_belongs_to_many :sub_categories
 
   before_create :bind_twitch
-  before_validation :is_live?
+  # before_validation :check_if_live
+
+  scope :live, -> { where(live: true) }
+
+  # def check_if_live
+  #   unless self.is_live?
+  #     throw :abort
+  #   end
+  # end
 
   def is_live?
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
-    if response["stream"].nil?
-      throw :abort
-    end
+    !response["stream"].nil?
   end
 
 
   def bind_twitch
+    unless self.is_live?
+      throw :abort
+    end
+
+
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
@@ -50,8 +61,8 @@ class Stream < ApplicationRecord
     self.save
   end
 
-  def is_saved?
-    !self.stream_file.nil?
+  def has_file?
+    !self.stream_file.blank?
   end
 
   def uptime

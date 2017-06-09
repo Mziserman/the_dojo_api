@@ -7,5 +7,4 @@ class SubCategory < ApplicationRecord
   def slug_attr
     self.slug = self.name.slugify
   end
-
 end

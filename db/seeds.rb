@@ -13,11 +13,23 @@ Stream.delete_all
 
 
 categories = ["Design", "Motion", "Photographie"]
-channel = ["a_seagull", "Alderiate", "ogaminglol", "learnsquare"]
+channel = ["a_seagull", "Alderiate", "ogaminglol", "learnsquare", "eclypsiatvlol"]
 
 Design = ["Photoshop", "Illustrator"]
 Motion = ["After Effect", "Widows Movie Maker"]
 Photographie  = ["Instagram", "Olol jsp"]
+
+boris = User.create(
+  email: "boris@gmail.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
+  pseudo: Faker::Name.first_name,
+  channel: 'ogaminglol',
+  live: true
+)
 
 categories.each do |category|
   cat = Category.create(name: category)
@@ -25,7 +37,7 @@ categories.each do |category|
   eval(category).each do |soft|
     SubCategory.create(name: soft, category_id: cat.id)
   end
-
+  i = 0
   5.times do
     u = User.create(
       email: Faker::Internet.email,
@@ -35,7 +47,7 @@ categories.each do |category|
       last_name: Faker::Name.last_name,
       avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
       pseudo: Faker::Name.first_name,
-      channel: channel.sample,
+      channel: channel[i],
       live: true
     )
     u.streams.create(
@@ -43,6 +55,7 @@ categories.each do |category|
       category: cat,
       description: Faker::Lorem.paragraph
     )
+    i += 1
   end
 end
 
