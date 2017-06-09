@@ -8,6 +8,8 @@ class Stream < ApplicationRecord
   # before_validation :check_if_live
 
   scope :live, -> { where(live: true) }
+  default_scope { order(viewers: :desc) }
+
 
   # def check_if_live
   #   unless self.is_live?
