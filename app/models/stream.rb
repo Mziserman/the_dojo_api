@@ -50,8 +50,8 @@ class Stream < ApplicationRecord
     self.save
   end
 
-  def is_saved?
-    !self.stream_file.nil?
+  def has_file?
+    !self.stream_file.blank?
   end
 
   def uptime
