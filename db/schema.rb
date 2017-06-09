@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 20170608153609) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.string   "name"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.bigint   "twitch_stream_id"
     t.datetime "twitch_created_at"
     t.string   "twitch_name"
     t.integer  "viewers",           default: 0
-    t.boolean  "live",              default: false
+    t.boolean  "live",              default: true
     t.integer  "max_viewers",       default: 0
     t.string   "description"
     t.string   "thumbnail"
