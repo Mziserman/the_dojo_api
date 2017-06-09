@@ -1,10 +1,14 @@
 class Api::V1::SubCategoriesController < ApplicationController
 
   def show
-    @category = SubCategory.where(slug: params[:id]).last
-    @stream = @category.streams
+    @sub_category = SubCategory.where(slug: params[:id]).last
+    @stream = @sub_category&.streams
 
-    render 'show.json'
+    if @stream
+      render 'show.json', status: :ok
+    else
+      render json: {}, status: :ok
+    end
   end
 
   def index
