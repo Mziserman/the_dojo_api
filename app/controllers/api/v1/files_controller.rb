@@ -13,11 +13,11 @@ class Api::V1::FilesController < ApplicationController
         @version = FileCommit.create(version: 0, stream_file_id: @file.id, commit_message: "Debut du trackage")
         render 'create.json', status: :ok
       else
-        render json: 'error', status: :error
+        head(:unprocessable_entity)
       end
 
     else
-      render json: 'error', status: :error
+      head(:unauthorized)
     end
   end
 
@@ -36,11 +36,11 @@ class Api::V1::FilesController < ApplicationController
           render 'commit.json', status: :ok
         end
       else
-        render json: 'error', status: :error
+        head(:unprocessable_entity)
       end
 
     else
-      render json: 'error', status: :error
+      head(:unauthorized)
     end
   end
 
@@ -48,7 +48,6 @@ class Api::V1::FilesController < ApplicationController
   # Argument stream_id
   def index
     stream_id = params[:stream_id]
-
     @commits = Stream.find(stream_id).stream_file.file_commits
 
     render 'index.json'
@@ -65,9 +64,9 @@ class Api::V1::FilesController < ApplicationController
       @file = StreamFile.find(file_id)
       @commit = @file.file_commits.where(version: version).last
 
-      render 'download.json'
+      render 'download.json', status: :ok
     else
-      render json: 'error', status: :error
+      head(:unprocessable_entity)
     end
   end
 
