@@ -19,6 +19,18 @@ Design = ["Photoshop", "Illustrator"]
 Motion = ["After Effect", "Widows Movie Maker"]
 Photographie  = ["Instagram", "Olol jsp"]
 
+boris = User.create(
+  email: "boris@gmail.com",
+  password: "password",
+  password_confirmation: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
+  pseudo: Faker::Name.first_name,
+  channel: 'ogaminglol',
+  live: true
+)
+
 categories.each do |category|
   cat = Category.create(name: category)
 
