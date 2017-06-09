@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       post '/files/create', to: 'files#create'
       post '/files/commit', to: 'files#commit'
       post '/files/commit/show', to: 'files#show_commit'
-      get '/files//commit/index', to: 'files#index'
+      get '/files/commit/index', to: 'files#index'
       # home routes
       get '/home', to: 'home#index'
     end
