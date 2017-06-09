@@ -5,7 +5,7 @@ class Stream < ApplicationRecord
   has_and_belongs_to_many :sub_categories
 
   before_create :bind_twitch
-  before_validation :is_live?
+  before_validation :check_if_live
 
   scope :live, -> { where(live: true) }
 
