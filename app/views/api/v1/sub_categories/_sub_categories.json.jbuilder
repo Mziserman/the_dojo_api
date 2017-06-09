@@ -1,1 +1,0 @@
-json.(sub_category, :id, :slug, :name)
