@@ -37,6 +37,7 @@ categories.each do |category|
   eval(category).each do |soft|
     SubCategory.create(name: soft, category_id: cat.id)
   end
+
   i = 0
   5.times do
     u = User.create(
@@ -53,7 +54,8 @@ categories.each do |category|
     u.streams.create(
       name: Faker::Name.name,
       category: cat,
-      description: Faker::Lorem.paragraph
+      description: Faker::Lorem.paragraph,
+      sub_categories: [SubCategory.last]
     )
     i += 1
   end

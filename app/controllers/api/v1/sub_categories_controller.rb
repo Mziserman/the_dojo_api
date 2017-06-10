@@ -17,4 +17,18 @@ class Api::V1::SubCategoriesController < ApplicationController
     render 'index.json'
   end
 
+  def search
+    raw_streams = []
+
+    params[:slug].each do |slug|
+      raw_streams << Stream.joins(:sub_categories).where(sub_categories: {slug: slug})
+    end
+
+    all_streams = raw_streams.uniq.flatten
+    @first_selection = all_streams.slice(0, 16)
+    @second_selection = all_streams.slice(16, all_streams.length)
+
+    render 'search.json', status: :ok
+  end
+
 end
