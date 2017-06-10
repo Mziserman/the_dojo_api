@@ -1,5 +1,4 @@
 class Api::V1::CategoriesController < ApplicationController
-
   def index
     @categories = Category.all
 
@@ -15,12 +14,30 @@ class Api::V1::CategoriesController < ApplicationController
 
   def search
     @category_streams = {}
-
-    @popular_streams = Stream.limit(16)
+    streams = []
 
     params[:slug].each do |slug|
-      @category_streams[slug] = Category.where(slug: slug).first&.streams.limit(8)
+      streams << Category.where(slug: slug).first&.streams
     end
+    streams.flatten!
+
+    @popular_streams = streams.slice(0, 4)
+    @other_streams = streams.slice(4, streams.length)
+
+    @other_streams.each do |stream|
+      if @category_streams[stream.category.slug].nil?
+        @category_streams[stream.category.slug] = [stream]
+      else
+        @category_streams[stream.category.slug] << stream
+      end
+    end
+
+    @category_streams.each_key do |key|
+      @category_streams[key].slice!(8, @category_streams[key].length)
+    end
+
+    # @other_streams.ma
+
     render 'search.json'
 
     # all_streams = raw_streams.uniq.flatten
