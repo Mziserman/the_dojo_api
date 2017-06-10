@@ -50,7 +50,7 @@ class Api::V1::FilesController < ApplicationController
   def index
     stream_id = params[:stream_id]
     if Stream.find(stream_id).has_file?
-      @commits = Stream.find(stream_id).stream_file.file_commits
+      @commits = Stream.find(stream_id).stream_file.file_commits.order(version: :desc)
       render 'index.json'
     else
       head(:unprocessable_entity)
