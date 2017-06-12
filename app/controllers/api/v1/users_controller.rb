@@ -38,6 +38,7 @@ class Api::V1::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :name, :password,
       :password_confirmation, :first_name, :last_name, :live, :avatar,
-      :pseudo, :channel)
+      :pseudo, :channel, :stream_description, :site_url, :schedule, :community,
+      :rules)
   end
 end

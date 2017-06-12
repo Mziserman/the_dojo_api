@@ -33,7 +33,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def destroy
-    @stream = current_user.streams.where(id: params[:id]).first
+    @stream = current_user.streams.live.where(id: params[:id]).first
     if !@stream&.live
       render 'show.json', status: :ok
     elsif @stream&.update(live: false)

@@ -30,6 +30,7 @@ class Stream < ApplicationRecord
       throw :abort
     end
 
+    self.user.streams.live.update_all(live: false)
 
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
@@ -52,6 +53,7 @@ class Stream < ApplicationRecord
     if response["stream"].nil?
       self.live = false
     else
+      self.user.streams.live.update_all(live: false)
       self.live = true
       self.viewers = response["stream"]["viewers"]
       self.thumbnail = response["stream"]["preview"]["large"]
