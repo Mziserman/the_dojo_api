@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170608153609) do
     t.string   "path"
     t.integer  "version"
     t.integer  "stream_file_id"
+    t.integer  "timestamp"
   end
 
   create_table "stream_files", force: :cascade do |t|
