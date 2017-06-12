@@ -23,12 +23,13 @@ class Api::V1::CategoriesController < ApplicationController
 
     @popular_streams = streams.slice(0, 4)
     @other_streams = streams.slice(4, streams.length)
-
-    @other_streams.each do |stream|
-      if @category_streams[stream.category.slug].nil?
-        @category_streams[stream.category.slug] = [stream]
-      else
-        @category_streams[stream.category.slug] << stream
+    unless @other_streams.nil?
+      @other_streams.each do |stream|
+        if @category_streams[stream.category.slug].nil?
+          @category_streams[stream.category.slug] = [stream]
+        else
+          @category_streams[stream.category.slug] << stream
+        end
       end
     end
 

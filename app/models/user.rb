@@ -12,5 +12,5 @@ class User < ApplicationRecord
     self.streams.live.length == 1
   end
 
-  scope :default, -> { where(live: true) }
+  # scope :default, -> { where(live: true) }
 end
