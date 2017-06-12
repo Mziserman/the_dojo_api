@@ -51,7 +51,7 @@ class Stream < ApplicationRecord
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
     if response["stream"].nil?
-      self.live = false
+      # self.live = false
     else
       # self.user.streams.live.update_all(live: false)
       self.live = true
