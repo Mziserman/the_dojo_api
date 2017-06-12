@@ -11,7 +11,7 @@ class Api::V1::StreamsController < ApplicationController
 
       @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).last
 
-      @stream = streamer.streams.live.last
+
       @stream.update_twitch_data
       if @stream.live
         render 'show.json', status: :ok
