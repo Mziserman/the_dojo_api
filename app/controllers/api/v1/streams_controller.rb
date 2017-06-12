@@ -8,7 +8,10 @@ class Api::V1::StreamsController < ApplicationController
   def show
     streamer = User.where(channel: params[:id]).first
     unless streamer.nil?
-      @stream = streamer.streams.live.last
+      if streamer.streams.blank?
+        streamer.stre
+      end
+      @stream = streamer.streams.last
       @stream.update_twitch_data
       if @stream.live
         render 'show.json', status: :ok
