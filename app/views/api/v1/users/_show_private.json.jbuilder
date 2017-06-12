@@ -7,5 +7,10 @@ json.(user,
   :avatar,
   :live,
   :authentication_token,
+  :stream_description,
+  :site_url,
+  :schedule,
+  :community,
+  :rules,
   :channel)
 
