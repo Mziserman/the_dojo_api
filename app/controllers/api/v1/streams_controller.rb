@@ -8,10 +8,9 @@ class Api::V1::StreamsController < ApplicationController
   def show
     streamer = User.where(channel: params[:id]).first
     unless streamer.nil?
-      unless streamer.streams.live&.empty?
-        @stream = streamer.streams.live.last
-        @stream.update_twitch_data
-
+      @stream = streamer.streams.live.last
+      @stream.update_twitch_data
+      if @stream.live
         render 'show.json', status: :ok
       else
         render json: { errors: ["No online stream for this channel"] }, status: :unauthorized
