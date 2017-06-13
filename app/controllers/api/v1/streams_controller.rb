@@ -2,7 +2,7 @@ class Api::V1::StreamsController < ApplicationController
   def index
     @streams = []
     User.all.each do |u|
-      @streams << u.stream.last
+      @streams << u.streams.last
     end
 
     render 'index.json'
