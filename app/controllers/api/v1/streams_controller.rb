@@ -1,11 +1,6 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-
-    @streams = Stream.live
     @streams = User.all.map{|u| u.streams.last}.compact
-    # Stream.joins(:users).where(users: {slug: slug})
-    # Stream.joins(:users).where(:position => -1)
-
 
     render 'index.json'
   end
@@ -40,7 +35,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def destroy
-    @stream = current_user.streams.live.where(id: params[:id]).first
+    @stream = current_user.streams.where(id: params[:id]).first
     if !@stream&.live
       render 'show.json', status: :ok
     elsif @stream&.update(live: false)
