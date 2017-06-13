@@ -29,8 +29,6 @@ class Api::V1::FilesController < ApplicationController
       stream_file_id = params.require(:file).permit(:stream_file_id)[:stream_file_id]
       stream = StreamFile.find(stream_file_id).stream
 
-      puts stream.inspect
-
       version_last = FileCommit.where(stream_file_id: stream_file_id).last.version
       @version = FileCommit.create(params.require(:file).permit(:commit_message, :stream_file_id))
       @version.version = version_last + 1

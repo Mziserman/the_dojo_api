@@ -1,1 +1,1 @@
-json.(version, :commit_message, :version, :path, :timestamp)
+json.(version, :commit_message, :version, :path, :created_at)
