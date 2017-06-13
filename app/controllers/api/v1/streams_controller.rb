@@ -2,7 +2,7 @@ class Api::V1::StreamsController < ApplicationController
   def index
 
     @streams = Stream.live
-    @streams = User.all.map{|u| u.streams.last}
+    @streams = User.all.map{|u| u.streams.last}.compact
     # Stream.joins(:users).where(users: {slug: slug})
     # Stream.joins(:users).where(:position => -1)
 
