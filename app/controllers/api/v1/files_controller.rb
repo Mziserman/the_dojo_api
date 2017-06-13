@@ -36,7 +36,6 @@ class Api::V1::FilesController < ApplicationController
         render 'commit.json', status: :ok
       end
 
-
     else
       head(:unauthorized)
     end
