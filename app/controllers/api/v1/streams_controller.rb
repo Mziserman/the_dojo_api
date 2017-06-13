@@ -1,9 +1,7 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-    @streams = []
-    User.all.each do |u|
-      @streams << u.streams.last
-    end
+
+    @streams = Stream.live
 
     render 'index.json'
   end
