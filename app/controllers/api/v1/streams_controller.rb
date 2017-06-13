@@ -1,6 +1,6 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-    @streams = Stream.live
+    @streams = User.all.map{|u| u.streams.last}.compact
 
     render 'index.json'
   end
@@ -8,10 +8,12 @@ class Api::V1::StreamsController < ApplicationController
   def show
     streamer = User.where(channel: params[:id]).first
     unless streamer.nil?
-      unless streamer.streams&.empty?
-        @stream = streamer.streams.last
-        @stream.update_twitch_data
 
+      @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).last
+
+
+      @stream.update_twitch_data
+      if @stream.live
         render 'show.json', status: :ok
       else
         render json: { errors: ["No online stream for this channel"] }, status: :unauthorized

@@ -8,7 +8,7 @@ class Stream < ApplicationRecord
   # before_validation :check_if_live
 
   scope :live, -> { where(live: true) }
-  default_scope { order(viewers: :desc) }
+  scope :ordered, -> { order(viewers: :desc) }
 
 
   # def check_if_live
@@ -30,6 +30,7 @@ class Stream < ApplicationRecord
       throw :abort
     end
 
+    # self.user.streams.live.update_all(live: false)
 
     response = HTTParty.get('https://api.twitch.tv/kraken/streams/' +
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
@@ -50,8 +51,9 @@ class Stream < ApplicationRecord
       self.user.channel + '?client_id=' + Settings.twitch.client_id)
 
     if response["stream"].nil?
-      self.live = false
+      # self.live = false
     else
+      # self.user.streams.live.update_all(live: false)
       self.live = true
       self.viewers = response["stream"]["viewers"]
       self.thumbnail = response["stream"]["preview"]["large"]

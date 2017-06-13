@@ -6,13 +6,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :streams
+  validates :channel, uniqueness: true
 
-  before_save :default_values
-
-  def default_values
-    self.live ||= false
+  def live
+    self.streams.live.length == 1
   end
 
-  scope :live, -> { where(live: true) }
-
+  # scope :default, -> { where(live: true) }
 end
