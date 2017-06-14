@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :users, only: [:show, :create, :destroy, :update]
       resource :sessions, only: [:show, :create, :destroy]
       resources :streams, only: [:index, :create, :destroy, :show]
+      get '/streams/show_boris/:channel', to: 'streams#show_boris'
       get '/categories/search', to: 'categories#search'
       resources :categories, only: [:index, :show]
       get '/sub_categories/search', to: 'sub_categories#search'
