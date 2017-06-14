@@ -1,6 +1,6 @@
 class Api::V1::StreamsController < ApplicationController
   def index
-    @streams = User.all.map{|u| u.streams.last}.compact
+    @streams = User.all.map{|u| u.streams.live.last}.compact
 
     render 'index.json'
   end
@@ -9,7 +9,7 @@ class Api::V1::StreamsController < ApplicationController
     streamer = User.where(channel: params[:id]).first
     unless streamer.nil?
 
-      @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).last
+      @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).live.last
 
 
       @stream.update_twitch_data
