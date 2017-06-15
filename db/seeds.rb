@@ -13,65 +13,16 @@ Stream.delete_all
 
 
 categories = ["Design", "Motion", "Photographie"]
-channel = ["a_seagull", "Alderiate", "ogaminglol", "learnsquare", "eclypsiatvlol", "eclypsiatvlol", "eclypsiatvlol", "eclypsiatvlol", "eclypsiatvlol", "eclypsiatvlol"]
 
-Design = ["Photoshop", "Illustrator"]
-Motion = ["After Effect", "Widows Movie Maker"]
-Photographie  = ["Instagram", "Olol jsp"]
-
-boris = User.create(
-  email: "boris@gmail.com",
-  password: "password",
-  password_confirmation: "password",
-  first_name: Faker::Name.first_name,
-  last_name: Faker::Name.last_name,
-  avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
-  pseudo: Faker::Name.first_name,
-  channel: 'ogaminglol',
-  live: true
-)
+Design = ["UX", "UI"]
+Motion = ["Motion", "Montage"]
+Photographie  = ["Montage photo", "Retouche photo"]
 
 categories.each do |category|
   cat = Category.create(name: category)
 
   eval(category).each do |soft|
     sub = SubCategory.create(name: soft, category_id: cat.id)
-    i = 0
-    8.times do
-      u = User.create(
-        email: Faker::Internet.email,
-        password: "password",
-        password_confirmation: "password",
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
-        pseudo: Faker::Name.first_name,
-        channel: channel[i],
-        live: true
-      )
-      stream = Stream.create(
-        name: Faker::Name.name,
-        category: cat,
-        user_id: u.id,
-        description: Faker::Lorem.paragraph
-      )
-      stream.sub_categories << sub
-      stream.save
-      i += 1
-    end
   end
 
-end
-
-10.times do
-  u = User.create(
-    email: Faker::Internet.email,
-    password: "password",
-    password_confirmation: "password",
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    avatar: "http://thecatapi.com/api/images/get?format=src&type=jpg",
-    pseudo: Faker::Name.first_name,
-    live: false
-  )
 end
