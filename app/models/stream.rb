@@ -26,9 +26,9 @@ class Stream < ApplicationRecord
 
 
   def bind_twitch
-    unless self.is_live?
-      throw :abort
-    end
+    # unless self.is_live?
+    #   throw :abort
+    # end
 
     # self.user.streams.live.update_all(live: false)
 
