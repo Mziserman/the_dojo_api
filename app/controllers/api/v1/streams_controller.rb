@@ -40,8 +40,7 @@ class Api::V1::StreamsController < ApplicationController
   def create
     @stream = current_user.streams.new(stream_params)
 
-    if @stream.is_live?
-      @stream.save
+    if @stream.save
       render 'show.json', status: :created
     else
       render json: { errors: ["stream is offline"] }, status: :unprocessable_entity
