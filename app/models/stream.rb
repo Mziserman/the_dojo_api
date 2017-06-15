@@ -54,7 +54,7 @@ class Stream < ApplicationRecord
       # self.live = false
     else
       # self.user.streams.live.update_all(live: false)
-      self.live = true
+
       self.viewers = response["stream"]["viewers"]
       self.thumbnail = response["stream"]["preview"]["large"]
       if self.max_viewers < response["stream"]["viewers"]
