@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :streams
-  validates :channel, uniqueness: true
+
 
   def live
     self.streams.live.length == 1

@@ -29,7 +29,7 @@ class Api::V1::StreamsController < ApplicationController
 
       @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).live.last
 
-      if @stream.live
+      if @stream
         render 'show.json', status: :ok
       else
         render json: { errors: ["No user has this channel"] }, status: :unauthorized
