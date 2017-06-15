@@ -27,7 +27,7 @@ class Api::V1::StreamsController < ApplicationController
     streamer = User.where(channel: params[:id]).first
     unless streamer.nil?
 
-      @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).live.last
+      @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).last
 
       if @stream
         render 'show.json', status: :ok
