@@ -12,8 +12,9 @@ class Api::V1::StreamsController < ApplicationController
       @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).live.last
 
 
-      @stream.update_twitch_data
+
       if @stream
+        @stream.update_twitch_data
         render 'show.json', status: :ok
       else
         render json: { errors: ["No online stream for this channel"] }, status: :unauthorized
