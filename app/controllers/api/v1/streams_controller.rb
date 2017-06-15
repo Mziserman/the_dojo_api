@@ -24,7 +24,7 @@ class Api::V1::StreamsController < ApplicationController
   end
 
   def show_boris
-    streamer = User.where(channel: params[:id]).first
+    streamer = User.where(channel: params[:channel]).first
     unless streamer.nil?
 
       @stream = Stream.where(user_id: streamer.id).order(created_at: :asc).last
